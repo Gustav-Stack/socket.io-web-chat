@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Socket.IO chat</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+  
+  <form id="username-container"  action="">
+    <label>Nome</label>
+    <input id="username-input" placeholder="Insira seu nome" autocomplete="off" /><button>Send</button>
+  
+  </form>
+
+  <form id="room-form" class="hidden">
+    <label for="room-form">Nome da Sala:</label>
+    <input type="text" id="roomName" required>
+    <button type="submit">Criar</button>
+</form>
+
+  <aside >
+    <h1 id="title-gamechat"><i class="fa-solid fa-gamepad"></i>Game-Chat</h1>
+    <ul id="users-online">Usuarios Online: 
+      <p id="user-count"> 0 </p>
+      <li class="title" >Global <i class="fa-solid fa-globe"></i></li>
+    </ul>
+
+    <ul id="rooms-online" >
+      <p id="create-room" class="title">Criar Sala<i class="fa-solid fa-circle-plus"></i></p>
+    </ul>
+
+  </aside>
+  <ul id="messages">
+   
+  
+  <form id="form" class="hidden" action="">
+    <input id="input" placeholder="Digite sua mensagem..." autocomplete="off" /><button>Send</button>
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
