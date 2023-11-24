@@ -10,7 +10,45 @@ const io = new Server(server);
 var userCount = 0;
 var users = [];
 var rooms =[];
-var messages = [];
+var messages = [
+  {
+    room: 'OLD',
+    name: 'Gustavo',
+    message: '<Mensagem do grupo OLD>:ola',
+    date: '08:55:25'
+  },
+  {
+    room: 'global',
+    name: 'Gustavo',
+    message: 'ola',
+    date: '08:55:32'
+  },
+  {
+    room: 'OLD',
+    name: 'Gustavo',
+    message: '<Mensagem do grupo OLD>:oi',
+    date: '03:30:03'
+  },
+  {
+    room: 'global',
+    name: 'Ana',
+    message: 'Oi, como vocês estão?',
+    date: '10:15:45'
+  },
+  {
+    room: 'OLD',
+    name: 'Pedro',
+    message: '<Mensagem do grupo OLD>: E aí pessoal!',
+    date: '15:20:10'
+  },
+  {
+    room: 'global',
+    name: 'Maria',
+    message: 'Bom dia a todos!',
+    date: '09:45:55'
+  }
+];
+
 var joined = []
 
 
@@ -32,6 +70,11 @@ io.on('connection', (socket) => {
 
   const globalMessages = messages.filter((message) => message.room === "global");
   socket.emit('previous messages', globalMessages);
+  let room = socket.id
+  let name = "gameChat"
+  let message = "Bem vindo ao servidor"
+  
+  date = new Date().toLocaleTimeString();
   
   
 
@@ -44,6 +87,8 @@ io.on('connection', (socket) => {
     if (!found) {
       //coloco no array e envio o nome do usuario para os usuarios online
       users.push({ id: socket.id, username: username });
+      
+  io.to(socket.id).emit("chat message",name, message, date,room);
       //aqui e a parte em que estou lidando com a contagem de usuarios
 
       //criando um evento que envia a quantidade de usuario para todos os clientes
@@ -70,20 +115,23 @@ io.on('connection', (socket) => {
   socket.on("join room", (room) => {
     socket.join(room);
   
-    const found = users.find((user) => socket.id === user.id);
-  
-    //includes is to verify if the array contains the socket id
-    const idfound = joined.includes(socket.id);
+    // includes is to verify if the array contains the socket id
+    const idfound = joined.find((joiner) => {
+      //comparing to see if the user is in the array joined
+      return joiner.id === socket.id && joiner.room === room;
+    });
   
     if (idfound) {
       return;
     } else {
-      joined.push(socket.id);
-  
+      const id = socket.id;
+      joined.push({ room, id });
+      console.log(joined);
       const roomMessages = messages.filter((message) => message.room === room);
       socket.emit('previous messages', roomMessages);
     }
   });
+  
   
   
   
@@ -99,7 +147,7 @@ io.on('connection', (socket) => {
       const room = selectedRoom;
   
       messages.push({ room, name, message, date });
-      io.to(selectedRoom).emit('chat message', name, message, date);
+      io.to(selectedRoom).emit('chat message', name, message, date,room);
     } else {
       console.error(404);
     }
@@ -118,8 +166,8 @@ io.on('connection', (socket) => {
     if (found) {
       var name = found.username;
       date = new Date().toLocaleTimeString()
-      
-      io.to([targetSocketId, socket.id]).emit('chat message', name, data.message, date);
+      let room = socket.id
+      io.to([targetSocketId, socket.id]).emit('chat message', name, data.message, date,room);
     } else {
       console.error(404)
     }
@@ -135,8 +183,8 @@ io.on('connection', (socket) => {
       
       
       date = new Date().toLocaleTimeString()
-      io.emit('chat message', name, msg, date);
-      room = "global";
+      let room = "global";
+      io.emit('chat message', name, msg, date, room);
       messages.push({room,name, message: msg, date });
     } else {
 

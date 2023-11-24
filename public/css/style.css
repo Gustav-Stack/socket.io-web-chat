@@ -14,8 +14,9 @@ body {
   box-sizing: border-box;
   backdrop-filter: blur(10px);
   right: 0;
-  width: 75%;
-  position: fixed;
+  width: -webkit-fill-available;
+  position: relative;
+  flex-direction: row;
 }
 
 #input {
@@ -24,7 +25,7 @@ body {
   flex-grow: 1;
   border-radius: 2rem;
   margin: 0.25rem;
-  
+
 }
 
 #input:focus {
@@ -46,9 +47,18 @@ body {
   margin: 0;
   padding: 0;
   right: 0;
-    width: 75%;
-    position: absolute;
+  width: 75%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
 }
+
+#form {
+  width: 75%;
+  position: absolute;
+  bottom: 0;
+}
+
 
 #messages>li {
   padding: 0.5rem 1rem;
@@ -68,25 +78,40 @@ body {
   margin: 20px;
 }
 
+.notification {
+  color: red;
+}
+
+.mensagem-li {
+  display: flex;
+  justify-content: space-between;
+}
+
 .hidden {
   display: none;
 }
-#user-count{
+
+#user-count {
   display: inline-block;
 }
 
-#users-online, #rooms-online {
+#users-online,
+#rooms-online {
   list-style: disc;
-  color: green;
-  
+  color: #5640ff;
+  font-weight: bold;
+
 }
-#title-gamechat{
+
+#title-gamechat {
   color: #fff;
   display: block;
   text-align: center;
 
 }
-#users-online> li, #rooms-online>li{
+
+#users-online>li,
+#rooms-online>li {
   display: flex;
   padding: 17px;
   position: relative;
@@ -96,13 +121,15 @@ body {
   width: 147%;
   margin-bottom: 20px;
 }
+
 .container {
   display: flex;
   flex-direction: row;
   align-items: baseline;
 }
-i{
-  padding-left:20px;
+
+i {
+  padding-left: 20px;
 }
 
 
@@ -116,10 +143,81 @@ aside {
   flex-direction: column;
   overflow: hidden;
   overflow-y: scroll;
-}
-#username-container, #room-form{
-  position: absolute;
-    top: 50%;
-    left: 50%;
 
+  z-index: 1;
+  transition: .1s;
+}
+
+#username-container,
+#room-form {
+  z-index: 1;
+  position: absolute;
+  top: 35%;
+  left: 40%;
+  background: #01010c;
+  width: 40%;
+  height: 20%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+
+}
+
+#room-form>input,
+#room-form>button,
+#username-container>input,
+#username-container>button {
+
+  border: none;
+  border-radius: 10px 0 0 20px;
+  padding: 20px;
+  position: relative;
+  left: 15%;
+  top: 30%;
+  width: 50%;
+
+
+}
+div::-webkit-scrollbar {
+  display: none;
+}
+
+#room-form>button,
+#username-container>button {
+  border-radius: 0 20px 10px 0;
+
+  width: 20%;
+}
+
+@media only screen and (max-width: 600px) {
+  aside {
+    width: 5%;
+  }
+
+  #messages, #form  {
+    width: 95%;
+  }
+
+  aside:hover {
+    width: 70%;
+
+  }
+  #room-form>input,
+#room-form>button,
+#username-container>input,
+#username-container>button {
+    width: 30%;
+  }
+  #username-container, #room-form {
+    z-index: 1;
+    position: absolute;
+    top: 35%;
+    left: 12%;
+    background: #01010c;
+    width: 81%;
+    height: 20%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
 }

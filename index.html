@@ -11,15 +11,13 @@
 
 <body>
   
-  <form id="username-container"  action="">
-    <label>Nome</label>
-    <input id="username-input" placeholder="Insira seu nome" autocomplete="off" /><button>Send</button>
+  <form id="username-container"   action="">
+    <input id="username-input" placeholder="Insira seu nickname" autocomplete="off" /><button>Send</button>
   
   </form>
 
-  <form id="room-form" class="hidden">
-    <label for="room-form">Nome da Sala:</label>
-    <input type="text" id="roomName" required>
+  <form id="room-form" class="hidden ">
+    <input type="text" id="roomName"  placeholder="Insira o nome da sala" required>
     <button type="submit">Criar</button>
 </form>
 
@@ -35,15 +33,16 @@
     </ul>
 
   </aside>
-  <ul id="messages">
-   
+  <ul id="messages" >
+  
+  </ul>
   
   <form id="form" class="hidden" action="">
     <input id="input" placeholder="Digite sua mensagem..." autocomplete="off" /><button>Send</button>
   </form>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="index.js"></script>
+  <script type="module" src="/src/index.js"></script>
 </body>
 
 </html>
